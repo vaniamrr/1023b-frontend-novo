@@ -6,8 +6,12 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   server:{
-    proxy:{
-      '/api': process.env.API_URL!,
-    }
+     proxy: {
+      '/api': {
+          target: 'https://one023b-backend-novo-5twg.onrender.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        }
+      }
   }
 })
