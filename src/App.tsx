@@ -11,7 +11,7 @@ type ProdutoType = {
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
   useEffect(() => {
-    fetch('/api/produtos')
+    fetch('https://one023b-backend-novo-5twg.onrender.com/produtos')
       .then((response) => response.json())
       .then((data) => setProdutos(data))
   }, [])
