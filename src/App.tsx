@@ -16,9 +16,34 @@ function App() {
       .then((data) => setProdutos(data))
       .catch((error) => console.error('Error fetching data:', error))
   }, [])
+  function handleForm(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    
+    fetch('/api/produtos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => response.json())
+      .then((newProduto) => setProdutos([...produtos, newProduto]))
+      .catch((error) => console.error('Error posting data:', error))
+    form.reset()
+  }
   return (
     <>
-      <div>TERE</div>
+      <div>Cadastro de Produtos</div>
+      <form onSubmit={handleForm}>
+        <input type="text" name="nome" placeholder="Nome" />
+        <input type="number" name="preco" placeholder="Preço" />
+        <input type="text" name="urlfoto" placeholder="URL da Foto" />
+        <input type="text" name="descricao" placeholder="Descrição" />
+        <button type="submit">Cadastrar</button>
+      </form>
+      <div>Lista de Produtos</div>
       {
         produtos.map((produto) => (
           <div key={produto._id}>
