@@ -12,6 +12,19 @@ api.interceptors.request.use((config) =>{
     return config
 })
 
+//Redirecionar para o LOGIN quando o usuário não tiver permissão.
+api.interceptors.response.use(
+    (response)=>response,
+    (error)=>{
+        const status = error?.response?.status;
+        if(status===401){
+            localStorage.removeItem("token")
+            window.location.href="/login?message=Token inválido!"
+        }
+        return Promise.reject(error)
+    }
+)
+
 
 
 export default api
