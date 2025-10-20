@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL:process.env.API_URL
+    baseURL:import.meta.env.API_URL
 })
 //Nós vamos criar um middleware para adicionar o token na requisição
 
