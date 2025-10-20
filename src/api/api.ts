@@ -16,10 +16,13 @@ api.interceptors.request.use((config) =>{
 api.interceptors.response.use(
     (response)=>response,
     (error)=>{
+        if(error?.code==="ERR_NETWORK"){
+            window.location.href=`/error?mensagem=${encodeURIComponent("Ligue o Servidor-> NPM RUN DEV")}`
+        }
         const status = error?.response?.status;
         if(status===401&&!(error?.response?.config?.url.endsWith("/login"))){
             localStorage.removeItem("token")
-            window.location.href="/login?mensagem=Token inválido!"
+            window.location.href=`/login?mensagem=${encodeURIComponent("Token inválido")}`
         }
         return Promise.reject(error)
     }
